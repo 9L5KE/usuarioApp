@@ -1,0 +1,150 @@
+<form #frmRegistro="ngForm" class="form-enable">
+    <div class="card">
+      <div class="card-header">
+        <h3>Editar usuario</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+        <label>ID:</label>
+        <input
+            name="inp_usuario_id"
+            #inp_usuario_id="ngModel"
+            type="text"
+            class="form-control"
+            [(ngModel)]="usuario.usuario_id"
+            required="true"
+            disabled
+          />
+          <label>Nombres:</label>
+          <input
+            name="inp_nombres"
+            #inp_nombres="ngModel"
+            type="text"
+            class="form-control"
+            [(ngModel)]="usuario.nombres"
+            required="true"
+          />
+          <div>
+            <span class="text-danger" *ngIf="inp_nombres.invalid"
+              >*El nombre es obligatorio</span
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Correo:</label>
+          <input
+            name="inp_correo"
+            #inp_correo="ngModel"
+            type="text"
+            class="form-control"
+            [(ngModel)]="usuario.correo"
+            required="true"
+          />
+          <div>
+            <span class="text-danger" *ngIf="inp_correo.invalid"
+              >*El correo es obligatorio</span
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Nueva contraseña:</label>
+          <input
+            name="inp_password"
+            #inp_password="ngModel"
+            type="password"
+            class="form-control"
+            [(ngModel)]="usuario.contrasena"
+            (keypress)="keyPress($event)"
+            required="true"
+          />
+          <div>
+            <span class="text-danger" *ngIf="inp_password.invalid"
+              >*La contraseña es obligatoria</span
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirmar contraseña:</label>
+          <input
+            name="inp_contrasena_confirmar"
+            type="password"
+            class="form-control"
+            [(ngModel)]="contrasena_confirmar"
+            (keypress)="keyPress($event)"
+            required="true"
+          />
+          <div>
+            <span class="text-danger">{{ mensaje_contrasena }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <!-- ngValue soporta objetos
+          value solamente soporta cadenas -->
+          <label>Roles:</label>
+          <div class="row">
+            <div class="col-3">
+              <select
+                name="inp_select_roles"
+                class="form-control"
+                [(ngModel)]="rol_seleccionado"
+              >
+                <option *ngFor="let rol of roles" [ngValue]="rol">
+                  {{ rol.nombre }}
+                </option>
+              </select>
+            </div>
+            <div class="col-3">
+              <button class="btn btn-success" (click)="addRol()">
+                Añadir rol
+              </button>
+            </div>
+            <div class="col-6">
+              <!-- <ul>
+                <li *ngFor="let rol of roles_seleccionados; let i = index">
+                  {{ rol.nombre }}
+                  <button class="btn btn-danger ml-3" (click)="quitarRol(i)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </li>
+              </ul> -->
+  
+              <table class="table">
+                <thead>
+                  <th>Rol seleccionado</th>
+                  <th class="text-center"><i class="fa fa-trash"></i></th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rol of roles_seleccionados; let i = index">
+                    <td>
+                      {{ rol.nombre }}
+                    </td>
+                    <td class="text-center">
+                      <button class="btn btn-danger" (click)="quitarRol(i)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+  
+              <small *ngIf="roles_seleccionados.length == 0" class="text-danger"
+                >*Añadir almenos 1 rol
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button
+          class="btn btn-success"
+          (click)="editarUsuario(frmRegistro)"
+          [disabled]="frmRegistro.invalid || passwordDif()"
+        >
+          Guardar Cambios
+        </button>
+        <button class="btn btn-warning ml-3" (click)="limpiarCampos()">
+          Limpiar
+        </button>
+      </div>
+    </div>
+  </form>

@@ -1,0 +1,16 @@
+<div class="tableContent">
+    <table class="table table-striped table-hover">
+      <thead>
+        <!-- <th>ID</th> -->
+        <th>Rol</th>
+        <th>Ruta </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of roles_seleccionados">
+            <!-- <td>{{rol.rol_id}</td> -->
+            <td>{{rol.nombre}}</td>
+            <td>{{rol.ruta}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
